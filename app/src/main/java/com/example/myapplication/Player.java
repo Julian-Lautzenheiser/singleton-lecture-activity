@@ -7,6 +7,7 @@ public class Player {
     private double movementSpeed;
 
     // TODO: Instance should be named "player"
+    private static Player player;
 
     /*
      * TODO: Constructor for Player
@@ -14,12 +15,27 @@ public class Player {
      * @param y y-coordinate of player (default 0.0)
      * @param movementSpeed movement speed of player (default 5.0)
      */
+    private Player() {
+        x = 0;
+        y = 0;
+        movementSpeed = 5;
+    }
 
     /*
      * TODO: Returns the instance of the player
      * Name: getPlayer()
      * @return the instance of the player
      */
+    public static Player getPlayer() {
+        if (player == null) {
+            synchronized (Player.class) {
+                if (player == null) {
+                    player = new Player();
+                }
+            }
+        }
+        return player;
+    }
 
     public void moveUp() {
         setY(Math.max(0, getY() - movementSpeed));
